@@ -29,11 +29,17 @@ def _append_required_args(options, args):
 def _append_filename_arg(filename, args):
     args.extend(('-f', filename))
 
+def _append_verbose_arg(options, args):
+    if options.verbose > 0:
+        verbose_string = '-' + ''.join('v' * options.verbose)
+        args.append(verbose_string)
+
 def _make_archive(options, paths, filename):
     args = ['tarsnap']
     _append_required_args(options, args)
     args.append('-c')
     _append_filename_arg(filename, args)
+    _append_verbose_arg(options, args)
     args.extend(paths)
     _run(options, args)
 
@@ -123,6 +129,10 @@ def _parse_args(args):
         type='int',
         default=1,
         help='The number of consecutive monthly backups to store.')
+    parser.add_option('--verbose', '-v',
+        action='count',
+        default=0,
+        help='The verbose level passed to tarsnap.')
     options, args = parser.parse_args(args)
 
     # Validate the arguments.
