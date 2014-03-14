@@ -49,7 +49,6 @@ def _delete_archive(options, filename):
 	_append_required_args(options, args)
 	args.append('-d')
 	_append_filename_arg(filename, args)
-	_append_verbose_arg(options, args)
 	_run(options, args)
 
 def _make_daily_archive(options, paths, d):
