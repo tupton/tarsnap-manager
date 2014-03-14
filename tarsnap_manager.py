@@ -35,7 +35,7 @@ def _append_verbose_arg(options, args):
         args.append(verbose_string)
 
 def _make_archive(options, paths, filename):
-    args = ['tarsnap']
+    args = [options.tarsnap_location]
     _append_required_args(options, args)
     args.append('-c')
     _append_filename_arg(filename, args)
@@ -44,7 +44,7 @@ def _make_archive(options, paths, filename):
     _run(options, args)
 
 def _delete_archive(options, filename):
-    args = ['tarsnap']
+    args = [options.tarsnap_location]
     _append_required_args(options, args)
     args.append('-d')
     _append_filename_arg(filename, args)
@@ -138,6 +138,9 @@ def _parse_args(args):
         action='count',
         default=0,
         help='The verbose level passed to tarsnap.')
+    parser.add_option('--tarsnap_location',
+        default='tarsnap',
+        help='The location of the tarsnap executable, e.g. /usr/local/bin/tarsnap.')
     options, args = parser.parse_args(args)
 
     # Validate the arguments.
