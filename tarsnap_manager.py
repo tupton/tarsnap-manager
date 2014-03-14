@@ -53,6 +53,11 @@ def _delete_archive(options, filename):
 def _make_daily_archive(options, paths, d):
     filename = _get_daily_filename(options.archive_name, d)
     _make_archive(options, paths, filename)
+    if not options.skip_delete:
+        td = timedelta(days=options.num_days)
+        oldest_date = d - td
+        oldest_filename = _get_daily_filename(options.archive_name, oldest_date)
+        _delete_archive(options, oldest_filename)
 
 def _make_weekly_archive(options, paths, d):
     if options.num_weeks and (d.isoweekday() == options.weekday):
